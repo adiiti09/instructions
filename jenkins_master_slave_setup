@@ -1,0 +1,7 @@
+1. Create master machine and install JDK and Jenkins
+2. Create slave machine and install JDK
+2. On slave machine, create user jenkins with home dir as /home/jenkins
+3. On master, generate ssh keys
+4. Copy public key to slave
+5. Test ssh connectivity as jenkins user
+6. Add node in jenkins with remote dir as jenkins home dir and password as private key

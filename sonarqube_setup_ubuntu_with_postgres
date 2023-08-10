@@ -1,0 +1,104 @@
+#SonarQube Install Steps
+#Ref: https://www.howtoforge.com/how-to-install-sonarqube-on-ubuntu-22-04/
+
+#Install JDK
+sudo apt update
+sudo apt install default-jdk
+
+#Install PostgreSQL
+#Add the GPG key of the PostgreSQL repository
+wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
+#Add the PostgreSQL repository for the Ubuntu system
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+
+sudo apt update
+sudo apt install postgresql-13
+sudo systemctl is-enabled postgresql
+sudo systemctl status postgresql
+
+#Log in to the PostgreSQL shell
+sudo -u postgres psql
+
+#Create a new database and user for SnonarQube and grant privileges
+CREATE USER sonarqube WITH PASSWORD 'sonarqube';
+CREATE DATABASE sonarqube OWNER sonarqube;
+GRANT ALL PRIVILEGES ON DATABASE sonarqube TO sonarqube;
+#Vetrify the details
+\l
+\du
+\q
+
+#Create a user to install sonarqube and change kernel parameter settings 
+sudo useradd -b /opt/sonarqube -s /bin/bash sonarqube
+sudo nano /etc/sysctl.conf
+vm.max_map_count=524288
+fs.file-max=131072
+
+#Apply the changes made above
+sudo sysctl --system
+
+#Limit the resources that will be used (persistent)
+sudo nano /etc/security/limits.d/99-sonarqube.conf
+sonarqube   -   nofile   131072
+sonarqube   -   nproc    8192
+
+#Limit the resources that will be used (temporary)
+ulimit -n 131072
+ulimit -u 8192
+
+
+#We are now ready to start sonarqube installation
+#Install prerequisite packages
+sudo apt install unzip software-properties-common wget
+#Download the zip file, unzip it and move it to sonarqube home dir and set ownership
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.6.1.59531.zip
+unzip sonarqube-9.6.1.59531.zip
+sudo mv sonarqube-9.6.1.59531 /opt/sonarqube
+sudo chown -R sonarqube:sonarqube /opt/sonarqube
+
+#Update config properties for DB, JVM, Web etc.
+sudo nano /opt/sonarqube/conf/sonar.properties
+
+sonar.jdbc.username=sonarqube
+sonar.jdbc.password=Password
+
+sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
+
+sonar.search.javaOpts=-Xmx512m -Xms512m -XX:MaxDirectMemorySize=256m -XX:+HeapDumpOnOutOfMemoryError
+
+sonar.web.host=0.0.0.0
+sonar.web.port=9000
+sonar.web.javaAdditionalOpts=-server
+
+sonar.log.level=INFO
+sonar.path.logs=logs
+
+#Create sonarqube service
+sudo nano /etc/systemd/system/sonarqube.service
+[Unit]
+Description=SonarQube service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+User=sonarqube
+Group=sonarqube
+Restart=always
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target
+
+#Reload the daemon, enable and start the service
+sudo systemctl daemon-reload
+
+sudo systemctl start sonarqube.service
+sudo systemctl enable sonarqube.service
+sudo systemctl status sonarqube.service
+
+#Access the server using http://<public-ip-of-vm>:9000
+#Do not forget to add inbount rule to open port 9000
+#Initial login details are admin/admin

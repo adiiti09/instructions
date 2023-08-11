@@ -1,7 +1,11 @@
 1. Create master machine and install JDK and Jenkins
-2. Create slave machine and install JDK
-2. On slave machine, create user jenkins with home dir as /home/jenkins
-3. On master, generate ssh keys
-4. Copy public key to slave
-5. Test ssh connectivity as jenkins user
-6. Add node in jenkins with remote dir as jenkins home dir and password as private key
+2. Create slave machine and install JDK (and any other tools like mvn which are required to run jobs)
+3. Create ssh key on Master using ssh-keygen with either RSA or ed25519 algorithm 
+4. Copy public from master to slave (/home/<user>/.ssh/authotized_keys)
+5. Test ssh connectivity from master to slave (ssh <user>@slave)
+6. The above step will add slave's signature in master's current users home dir .ssh/known_hosts
+7. Copy .ssh folder from master to /var/lib/jenkins on master
+8. Change ownership of above folder to jenkins user (chown -R jenkins /var/lib/jenkins/.ssh)
+9. Go to jenkins dashboard nodes and clouds and add a new node
+10. Choose remote dir as /home/<user>
+11. Enter username as <user> and password as private key from master

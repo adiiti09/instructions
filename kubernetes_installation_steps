@@ -1,1 +1,9 @@
+Setting up 3 node Kubernetes Cluster
+https://k21academy.com/docker-kubernetes/three-node-kubernetes-cluster/
 
+1. Prerequisites
+
+2. Installing Containerd, Kubectl and Kubeadm Packages
+3. Create a Kubernetes Cluster
+4. Join Worker Nodes to the Kubernetes Cluster
+5. Testing the Cluster

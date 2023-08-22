@@ -61,7 +61,7 @@ sudo chown -R sonarqube:sonarqube /opt/sonarqube
 sudo nano /opt/sonarqube/conf/sonar.properties
 
 sonar.jdbc.username=sonarqube
-sonar.jdbc.password=Password
+sonar.jdbc.password=sonarqube
 
 sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
 

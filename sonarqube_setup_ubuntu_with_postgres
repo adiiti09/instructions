@@ -43,6 +43,7 @@ sonarqube   -   nofile   131072
 sonarqube   -   nproc    8192
 
 #Limit the resources that will be used (temporary)
+#Give the following commands at CLI
 ulimit -n 131072
 ulimit -u 8192
 

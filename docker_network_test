@@ -1,0 +1,41 @@
+docker run -it --name myubuntu ubuntu
+apt install netcat
+apt install iputils-ping
+
+
+docker commit myubuntu ubuntu_nc
+
+docker run -it --name test_nc -p 45678:45679 ubuntu_nc
+
+#On container: 
+netcat -l 45679
+
+#On host:
+netcat localhost 45678
+-------------------------------------------------------------
+#Create a docker network called devops
+#Create two containers jenkins and ansible from ubuntu_nc attaching them to devops network
+
+docker network create devops
+
+docker run -itd --name jenkins --network devops ubuntu_nc
+docker run -itd --name ansible --network devops ubuntu_nc
+
+apt install iproute2
+
+ip address
+#jenkins - 172.18.0.2
+ping 172.18.0.3
+
+#ansible - 172.18.0.3
+ping 172.18.0.2
+
+#Create another network linux
+#Create a container and attach it to linux
+#Try to ping linux container from jenkins or ansible
+
+docker network create linux
+docker run -itd --name lin_host --network linux ubuntu_nc
+
+#Connect jenkins container to linux network
+#Note that it gets an additional IP Address from linux subnet

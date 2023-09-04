@@ -70,7 +70,7 @@ echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt
 12. Update apt package index, install kubelet, kubeadm and kubectl, and pin their version 
 KUBE_VERSION=1.26.0
 apt update
-apt-get install -y kubelet=${KUBE_VERSION}-00  kubeadm=${KUBE_VERSION}-00 kubectl=${KUBE_VERSION}-00 kubernetes-cni
+apt install -y kubelet=${KUBE_VERSION}-00  kubeadm=${KUBE_VERSION}-00 kubectl=${KUBE_VERSION}-00 kubernetes-cni
 
 13. To hold the installed packages at their installed versions, use the following command
 apt-mark hold kubelet kubeadm kubectl
@@ -112,13 +112,16 @@ Networking - Refer:
   - https://github.com/kubeovn/kube-ovn
   - https://k21academy.com/docker-kubernetes/network-policies-in-kubernetes/
 ********************************************************************************
-#Test the Cluster
+#Test the Cluster by running the following command on master
 kubectl get nodes
 
 The above command should show the node machine under list of nodes and status as ready. 
-If the status is shown as not ready, run the below command to setup network interface.
+If the status is shown as not ready, run the below command on master to setup network interface.
 
 kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 
 After this the status of nodes should change to ready.
 ********************************************************************************
+
+#To delete the cluster
+kubeadm reset

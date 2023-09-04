@@ -125,3 +125,7 @@ After this the status of nodes should change to ready.
 
 #To delete the cluster
 kubeadm reset
+********************************************************************************
+#To persis export KUBECONFIG command add it to the bottom of .bashrc
+#do nano .bashrc and add export KUBECONFIG=/etc/kubernetes/admin.conf at the bottom and save it
+********************************************************************************

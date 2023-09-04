@@ -129,3 +129,6 @@ kubeadm reset
 #To persis export KUBECONFIG command add it to the bottom of .bashrc
 #do nano .bashrc and add export KUBECONFIG=/etc/kubernetes/admin.conf at the bottom and save it
 ********************************************************************************
+Ingress Steps
+https://www.golinuxcloud.com/steps-to-expose-services-using-kubernetes-ingress/
+********************************************************************************

@@ -1,1 +1,102 @@
+#Update repos
+sudo apt update
 
+#install prerequisites
+sudo apt install autoconf gcc make unzip libgd-dev libmcrypt-dev libssl-dev dc snmp libnet-snmp-perl gettext apache2
+
+#Download and extract the installer
+curl -L -O https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.11.tar.gz
+tar zxf nagios-4.4.11.tar.gz
+cd nagioscore-nagios-4.4.4
+
+#Set Apache Configs
+./configure --with-httpd-conf=/etc/apache2/sites-enabled
+
+#Compile Nagios
+make all
+
+#Create a nagios user and nagios group
+sudo make install-groups-users
+
+#Install Nagios binary files, service files, and sample configuration files
+sudo make install
+sudo make install-daemoninit
+sudo make install-commandmode
+sudo make install-config
+
+#Use Apache to serve Nagios’ web interface
+sudo make install-webconf
+
+#Enable the Apache rewrite and cgi modules with the a2enmod command
+sudo a2enmod rewrite
+sudo a2enmod cgi
+
+#In order to issue external commands via the web interface to Nagios, add the web server user, 
+#www-data, to the nagios group
+sudo usermod -a -G nagios www-data
+
+#Use the htpasswd command to create an admin user called nagiosadmin that can access the Nagios 
+#web interface
+sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+#Passed used is Admin@123456 (Can be changed)
+
+#Restart apache2
+sudo systemctl restart apache2
+********************************************************************************************
+#Install Nagios Plugins
+
+#Download latest version of plugins jar and extract 
+curl -L -O https://nagios-plugins.org/download/nagios-plugins-2.4.5.tar.gz
+tar zxf nagios-plugins-2.4.5.tar.gz
+cd nagios-plugins-2.4.5
+
+#Configure the installation
+./configure
+
+#Build and install the plugins
+make
+sudo make install
+
+#Now the plugins are installed, but you need one more plugin for monitoring remote servers
+cd ~
+curl -L -O https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-4.1.0/nrpe-4.1.0.tar.gz
+
+#Extract and configure
+tar zxf nrpe-4.1.0.tar.gz
+cd nrpe-4.1.0
+./configure
+
+#Build and install check_nrpe plugin
+make check_nrpe
+sudo make install-plugin
+
+********************************************************************************************
+#Configure Nagios Server
+sudo nano /usr/local/nagios/etc/nagios.cfg
+
+#Find and uncomment the line which specifies config folders for servers
+#cfg_dir=/usr/local/nagios/etc/servers (remove #)
+
+#Create the abve mentioned cfg_dir
+sudo mkdir /usr/local/nagios/etc/servers
+
+#Optionally edit contacts config file and update email ids
+sudo nano /usr/local/nagios/etc/objects/contacts.cfg
+
+#Add a new command to your Nagios configuration that lets you use the check_nrpe command in 
+#Nagios service definitions
+sudo nano /usr/local/nagios/etc/objects/commands.cfg
+
+#Add the below lines to the end of the file
+define command{
+        command_name check_nrpe
+        command_line $USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
+}
+
+#Start Nagios and enable it to start when the server boots
+sudo systemctl start nagios
+sudo systemctl enable nagios
+sudo systemctl restart nagios
+
+#Accessing Nagios UI
+http://nagios_server_public_ip/nagios

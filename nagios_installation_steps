@@ -106,6 +106,9 @@ $ sudo apt install nagios-plugins nagios-nrpe-server
 
 #Configure NRPE
 #Open the /etc/nagios/nrpe.cfg file
+
+$ sudo nano /etc/nagios/nrpe.cfg
+
 #Replace the value of allowed_hosts with 127.0.0.1,0.0.0.0 replacing the second IP with the IP address of the Nagios server.
 
 We will now open the file /etc/nagios/nrpe.cfg and replace a couple of values.
@@ -120,14 +123,14 @@ Save the file when you are finished.
 
 Now restart NRPE:
 
-$ service nagios-nrpe-server restart
+$ sudo service nagios-nrpe-server restart
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # On the server
 Add the Host to Nagios Server
 
 Now that we've configured the host we're going to monitor, we need to switch back to our Nagios server and add the host to it. Open the following file with your favorite editor:
 
-$ nano /usr/local/nagios/etc/servers/host.cfg
+$ sudo nano /usr/local/nagios/etc/servers/host.cfg
 
 Use the following block as a template. Replace host with an appropriate name for your remote host, and update the host_name, alias, and address values accordingly.
 
@@ -144,7 +147,7 @@ define host {
 
 This will allow you to simply monitor whether the server is up or down. Now reload Nagios:
 
-$ service nagios reload
+$ sudo service nagios reload
 
 
 

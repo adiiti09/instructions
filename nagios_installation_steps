@@ -99,17 +99,14 @@ http://192.0.2.10/nagios
 
 5. Add Remote Hosts
 
-Install Prerequisites
+#Install Prerequisites
+#Install nagios-plugins and nagios-nrpe-server:
 
-To monitor hosts, we need to add them to Nagios. By default, Nagios only monitors localhost (the server it's running on). We're going to add hosts that are part of our network to gain even more control. You will need to use the following instructions on all hosts that you want to monitor.
+$ sudo apt install nagios-plugins nagios-nrpe-server
 
-First, install nagios-plugins and nagios-nrpe-server:
-
-# apt-get install nagios-plugins nagios-nrpe-server
-
-Configure NRPE
-
-Next, open the /etc/nagios/nrpe.cfg file. Replace the value of allowed_hosts with 127.0.0.1,0.0.0.0 replacing the second IP with the IP address of the Nagios server.
+#Configure NRPE
+#Open the /etc/nagios/nrpe.cfg file
+#Replace the value of allowed_hosts with 127.0.0.1,0.0.0.0 replacing the second IP with the IP address of the Nagios server.
 
 We will now open the file /etc/nagios/nrpe.cfg and replace a couple of values.
 
@@ -123,39 +120,31 @@ Save the file when you are finished.
 
 Now restart NRPE:
 
-service nagios-nrpe-server restart
-
-Add the Host to Nagios
+$ service nagios-nrpe-server restart
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# On the server
+Add the Host to Nagios Server
 
 Now that we've configured the host we're going to monitor, we need to switch back to our Nagios server and add the host to it. Open the following file with your favorite editor:
 
-# nano /usr/local/nagios/etc/servers/host.cfg
+$ nano /usr/local/nagios/etc/servers/host.cfg
 
 Use the following block as a template. Replace host with an appropriate name for your remote host, and update the host_name, alias, and address values accordingly.
 
 define host {
-
         use                             linux-server
-
         host_name                       yourhost
-
         alias                           My first Apache server
-
-        address                         1.2.3.4
-
+        address                         1.2.3.4 #private ip
         max_check_attempts              5
-
         check_period                    24x7
-
         notification_interval           30
-
         notification_period             24x7
-
 }
 
 This will allow you to simply monitor whether the server is up or down. Now reload Nagios:
 
-# service nagios reload
+$ service nagios reload
 
 
 

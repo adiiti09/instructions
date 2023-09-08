@@ -37,3 +37,43 @@ sudo systemctl restart mongod
 #Update filewall setting by adding inbound rule or modifying local firewall settings
 sudo ufw allow 27017
 
+#Access mongo shell
+mongosh
+
+Create user mongodbuser
+use admin
+db.createUser(
+{
+user: "mongdbuser",
+pwd: passwordPrompt(), // or cleartext password
+roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+}
+)
+
+> exit
+bye
+
+#To check if the user has been created, log in to the shell using the user credentials.
+
+mongosh -u mongdbuser -p --authenticationDatabase admin
+
+#See existing dbs
+> show dbs
+
+With MongoDB, creating a database is as simple as switching to a blank database. For instance, mongotestdb:
+
+> use mongotestdb
+
+#In SQL databases, a collection is comparable to a table. Here, the following commands can be used to create a table in the appropriate database
+
+db.employeedetails.insertOne(
+   {F_Name: "John",
+    L_NAME: "Doe",
+    ID_NO: "23245",
+     AGE: "25",
+     TEL: "63365467666"
+   }
+)
+
+> show collections
+employeedetails

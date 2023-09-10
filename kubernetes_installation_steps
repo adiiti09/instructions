@@ -1,5 +1,4 @@
 #Setting up 3 node Kubernetes Cluster
-#https://k21academy.com/docker-kubernetes/three-node-kubernetes-cluster/
 
 #Opening ports
 #Master Node

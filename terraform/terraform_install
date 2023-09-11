@@ -1,1 +1,11 @@
+#Update existing repository
+sudo apt update
 
+#download and add terraform repo keys, for the remote repo to be trusted by the local
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+#add remote repo
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+#update local repo and install
+sudo apt update && sudo apt install terraform

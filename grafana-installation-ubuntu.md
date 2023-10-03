@@ -21,3 +21,19 @@
 ### Install Grafana OSS
 
     sudo apt install grafana
+
+# Starting Grafana service with systemd
+
+### To start the service, run the following commands
+
+    sudo systemctl daemon-reload
+    sudo systemctl start grafana-server
+    sudo systemctl status grafana-server
+
+### To verify that the service is running, run the following command
+
+    sudo systemctl status grafana-server
+
+### To configure the Grafana server to start at boot, run the following command
+    sudo systemctl enable grafana-server.service
+

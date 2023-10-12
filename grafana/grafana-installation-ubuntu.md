@@ -1,4 +1,3 @@
-
 # Grafana Installaton on Ubuntu 22.04
 
 ### Install the prerequisite packages

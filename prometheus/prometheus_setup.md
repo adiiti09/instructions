@@ -8,7 +8,7 @@
     tar xvzf prometheus-2.47.1.linux-amd64.tar.gz
     cd prometheus-2.47.1.linux-amd64
 
-## Delete or rename existing config file prometheus.yml file and ensure that the below contents are added
+## Delete or rename existing config file *prometheus.yml* file and ensure that the below contents are added
 
 ```
 global:

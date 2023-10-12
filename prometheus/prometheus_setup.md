@@ -1,14 +1,14 @@
 # Prometheus Installation On Ubuntu (Any Linux variant is also fine)
-## Go to [Prometheus Downloads](https://prometheus.io/download/) and download the latest version available at that time
+### Go to [Prometheus Downloads](https://prometheus.io/download/) and download the latest version available at that time
 
     wget https://github.com/prometheus/prometheus/releases/download/v2.47.1/prometheus-2.47.1.linux-amd64.tar.gz
 
-## Extract the files and change to the directory
+### Extract the files and change to the directory
 
     tar xvzf prometheus-2.47.1.linux-amd64.tar.gz
     cd prometheus-2.47.1.linux-amd64
 
-## Delete or rename existing config file **prometheus.yml** file and ensure that the below contents are added
+### Delete or rename existing config file **prometheus.yml** file and ensure that the below contents are added
 
 ```
 global:

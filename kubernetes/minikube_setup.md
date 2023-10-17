@@ -1,7 +1,13 @@
 
-# Minikube installation - Windows
+# Minikube Setup - Ubuntu
 
-### Open Powershell and run the following command
+### To install the latest minikube stable release on x86-64 Linux using binary download:
 
-    New-Item -Path 'c:\' -Name 'minikube' -ItemType Directory -Force
-    Invoke-WebRequest -OutFile 'c:\minikube\minikube.exe' -Uri 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe' -UseBasicParsing
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+### From a terminal with administrator access (but not logged in as root), run:
+    minikube start
+
+
+

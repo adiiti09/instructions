@@ -9,3 +9,18 @@
 1. Navigate to Manage Jenkins --> Security/ Security.
 2. Under Authorization click on the dropdown and select Matrix-based Security for fine grained access control.
 3. Add jenkins and give necessary permissions.
+
+# Plugin Management
+1. Navigate to Manage Jenkins --> System COnfiguration / Plugins.
+
+## Updates
+> Shows any updates to already installed plugins.
+
+## Available Plugins
+> List of plugins that are available to be installed
+
+## Installed Plugins
+> List of plugins that are already installed
+
+## Advanced Settings
+> Proxy settings that can be specified in case your jenkins installation is behind a proxy  

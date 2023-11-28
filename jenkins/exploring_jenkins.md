@@ -23,4 +23,5 @@
 > List of plugins that are already installed
 
 ## Advanced Settings
-> Proxy settings that can be specified in case your jenkins installation is behind a proxy  
+> Proxy settings that can be specified in case your jenkins installation is behind a proxy
+> Custom plugins that can be uploaded or accessed from some URL

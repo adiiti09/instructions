@@ -8,4 +8,5 @@
 8. Change ownership of above folder to jenkins user (chown -R jenkins /var/lib/jenkins/.ssh)
 9. Go to jenkins dashboard nodes and clouds and add a new node
 10. Choose remote dir which will be used as build dir (/home/<user>/jenkins)
-11. Enter username as <user> and password as private key from master
+11. Enter hostname of ip address of the slave machine
+12. Enter username as <user> and password as private key from master

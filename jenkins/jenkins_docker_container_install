@@ -1,0 +1,20 @@
+
+# Pull docker image
+
+    docker pull jenkins/jenkins
+
+# Run the container 
+
+    docker run -d -p xxxx:8080 -p 50000:50000 -v /home/azureuser/jenkins:/var/jenkins_home jenkins/jenkins
+    
+- Replace xxxx above with a free port on the host like 8080 or 8888
+
+# Check the name of the container using docker ps 
+
+# Check the container logs using 
+
+    docker logs <container_name>
+
+# Ths above command will display the logs which show the initial admin password. Copy it and keep it handy.
+
+# Access http://<host_ip>:xxxx which is used above and enter initial admin password.

@@ -25,7 +25,7 @@
 
 1. ssh to machines and switch user to root
 
-      sudo -i
+        sudo -i
 
 2. Configure persistent loading of modules
   

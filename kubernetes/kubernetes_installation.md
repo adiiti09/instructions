@@ -29,13 +29,10 @@
 
 2. Configure persistent loading of modules
   
-    tee /etc/modules-load.d/containerd.conf <<EOF
-    
-    overlay
-    
-    br_netfilter
-    
-    EOF
+        tee /etc/modules-load.d/containerd.conf <<EOF
+        overlay
+        br_netfilter
+        EOF
 
 3. Load at runtime
 

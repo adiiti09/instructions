@@ -36,86 +36,81 @@
 
 3. Load at runtime
 
-    modprobe overlay
-    
-    modprobe br_netfilter
+      modprobe overlay
+      modprobe br_netfilter
 
 5. Update Iptables Settings
 
 To ensure packets are properly processed by IP tables during filtering and port forwarding
 Set the net.bridge.bridge-nf-call-iptables to ‘1’ in your sysctl config file
 
-    tee /etc/sysctl.d/kubernetes.conf<<EOF
-    
-    net.bridge.bridge-nf-call-ip6tables = 1
-    
-    net.bridge.bridge-nf-call-iptables = 1
-    
-    net.ipv4.ip_forward = 1
-    
-    EOF
+      tee /etc/sysctl.d/kubernetes.conf<<EOF
+      net.bridge.bridge-nf-call-ip6tables = 1
+      net.bridge.bridge-nf-call-iptables = 1
+      net.ipv4.ip_forward = 1
+      EOF
 
 6. Reload configs
     
-    sysctl --system
+      sysctl --system
 
 ### Install docker and containerd on master and worker nodes
 #### docker is needed on master node as well because kubeadm uses containers (pods) to deploy etcd and the api server components
 
 7. Install docker on all worker nodes by referring instruction given in 
 
-    https://gitlab.com/-/ide/project/nravinuthala/instructions/edit/main/-/docker_ubuntu22.04_install_steps
+      https://gitlab.com/-/ide/project/nravinuthala/instructions/edit/main/-/docker_ubuntu22.04_install_steps
 
-    containerd config default> /etc/containerd/config.toml
+      containerd config default> /etc/containerd/config.toml
     
-    sed -e 's/SystemdCgroup = false/SystemdCgroup = true/g' -i /etc/containerd/config.toml
+      sed -e 's/SystemdCgroup = false/SystemdCgroup = true/g' -i /etc/containerd/config.toml
 
 8. Restart containerd
 
-    systemctl daemon-reload
+      systemctl daemon-reload
     
-    systemctl restart containerd
+      systemctl restart containerd
     
-    systemctl enable containerd
+      systemctl enable containerd
     
-    systemctl status containerd
+      systemctl status containerd
 
 # Follow the below instructions on both master and nodes
 
 9.  Update the apt package index and install packages needed to use the Kubernetes apt repository
 
-    apt update && apt install -y apt-transport-https ca-certificates curl
+      apt update && apt install -y apt-transport-https ca-certificates curl
 
 10. Download the Google Cloud public signing key 
   
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B53DC80D13EDEF05
+      apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B53DC80D13EDEF05
 
 11. Add Kubernetes apt repository
 
-    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+      echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 12. Update apt package index, install kubelet, kubeadm and kubectl, and pin their version 
   
-    KUBE_VERSION=1.26.0
+      KUBE_VERSION=1.26.0
     
-    apt update
+      apt update
     
-    apt install -y kubelet=${KUBE_VERSION}-00  kubeadm=${KUBE_VERSION}-00 kubectl=${KUBE_VERSION}-00 kubernetes-cni
+      apt install -y kubelet=${KUBE_VERSION}-00  kubeadm=${KUBE_VERSION}-00 kubectl=${KUBE_VERSION}-00 kubernetes-cni
 
 13. To hold the installed packages at their installed versions, use the following command
 
-    apt-mark hold kubelet kubeadm kubectl
+      apt-mark hold kubelet kubeadm kubectl
 
 14. Start the kubelet service is required on all the nodes
 
-    systemctl enable kubelet && systemctl start kubelet
+      systemctl enable kubelet && systemctl start kubelet
 
 # Create a kubernetes cluster 
 ## Run the following on master
 
 15. We have to initialize kubeadm on the master node
 
-    kubeadm init --kubernetes-version=${KUBE_VERSION}
+      kubeadm init --kubernetes-version=${KUBE_VERSION}
 
 You will see output as shown below:
 

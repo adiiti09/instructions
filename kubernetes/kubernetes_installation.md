@@ -18,14 +18,14 @@
 ### Worker Nodes
 
   > 10250           Kube API                Self, Control Plane
-  
+
   > 30000-32767     NodePort Services       All
 
 # Steps to be executed on both master and nodes
 
 1. ssh to machines and switch user to root
 
-    sudo -i
+      sudo -i
 
 2. Configure persistent loading of modules
   

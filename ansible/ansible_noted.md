@@ -11,5 +11,17 @@
 ## Execute above playbook
 
     ansible-playbook install_apache.yml -b
+
+# Roles Example
+
+Create 3 roles as follows:
+  - prerequisites
+  - mongodb
+  - apache
+
+    ansible-galaxy init prerequisites
+    ansible-galaxy init mongodb
+    ansible-galaxy init apache
+
         
 

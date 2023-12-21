@@ -19,9 +19,11 @@ Create 3 roles as follows:
   - mongodb
   - apache
 
-    ansible-galaxy init prerequisites
-    ansible-galaxy init mongodb
-    ansible-galaxy init apache
+        ansible-galaxy init prerequisites
+
+        ansible-galaxy init mongodb
+
+        ansible-galaxy init apache
 
         
 

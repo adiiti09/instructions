@@ -52,12 +52,12 @@ Set the net.bridge.bridge-nf-call-iptables to ‘1’ in your sysctl config file
 
 6. Reload configs
     
-      sysctl --system
+        sysctl --system
 
 ### Install docker and containerd on master and worker nodes
-#### docker is needed on master node as well because kubeadm uses containers (pods) to deploy etcd and the api server components
+#### Docker is needed on master node as well because kubeadm uses containers (pods) to deploy etcd and the api server components
 
-7. Install docker on all worker nodes by referring instruction given in 
+7. Install docker on all nodes by referring instruction given in 
 
       https://gitlab.com/-/ide/project/nravinuthala/instructions/edit/main/-/docker_ubuntu22.04_install_steps
 

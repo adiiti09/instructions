@@ -2,9 +2,9 @@
 
     - hosts: all
       tasks:
-    - name: install httpd package
+      - name: install httpd package
         yum: name=httpd state=latest
-    - name: start and enable httpd service
+      - name: start and enable httpd service
         service: name=httpd state=restarted enabled=yes
         
 

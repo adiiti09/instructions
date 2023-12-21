@@ -4,15 +4,21 @@
 ### Master Node
 
   > Port Range      Purpose                 Used By
+
   > 6443*           Kubernetes API Server   All
+
   > 2379-2380       etcd server client API  kube-apiserver, etcd
+
   > 10250           Kubelet API             Self, Control Plane
+
   > 10251           kube-scheduler          Self
+
   > 10252           kube-controller-manager Self
 
 ### Worker Nodes
 
   > 10250           Kube API                Self, Control Plane
+  
   > 30000-32767     NodePort Services       All
 
 # Steps to be executed on both master and nodes

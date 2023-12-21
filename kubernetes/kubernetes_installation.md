@@ -59,7 +59,7 @@ Set the net.bridge.bridge-nf-call-iptables to ‘1’ in your sysctl config file
 
 7. Install docker on all nodes by referring instruction given in 
 
-      https://gitlab.com/-/ide/project/nravinuthala/instructions/edit/main/-/docker_ubuntu22.04_install_steps
+      https://gitlab.com/nravinuthala/instructions/-/blob/main/docker/docker_ubuntu22.04_install_steps.md
 
       containerd config default> /etc/containerd/config.toml
     

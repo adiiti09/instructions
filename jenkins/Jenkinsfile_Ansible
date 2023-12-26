@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/nravinuthala/jenkins_ansible_test.git'
+            }
+        }
+        stage('run playbook') {
+            steps {
+                ansiblePlaybook(credentialsId: 'jenkins_master_slave1', inventory: 'inventory/hosts', playbook: 'playbooks/test-playbook.yml')
+            }
+        }
+    }
+}

@@ -11,6 +11,13 @@
         transport input ssh
         login local
 
+    int gig 1
+
+    ip address dhcp
+
+    no shut
+
+
     write memory
 
     copy running-config startup-config

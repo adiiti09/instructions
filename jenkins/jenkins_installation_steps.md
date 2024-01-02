@@ -8,7 +8,7 @@ If you get an error like Command 'java' not found, you can install java using th
 
 Copy GPG keys for the Jnekins repo
 
-    curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/ jenkins-keyring.asc > /dev/null
+    curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
 
 Add repo signed by the keys added above
 

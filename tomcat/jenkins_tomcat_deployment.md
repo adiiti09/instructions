@@ -19,8 +19,8 @@
 
 - Edit <tomcat_home>/conf/tomcat-users.xml
 - Add the followoing lines:
-        \<role rolename="manager-script"/>
-        \<user username="<some_username>" password="<some_password>" roles="manager-script"/>
+            \<role rolename="manager-script"/>
+            \<user username="<some_username>" password="<some_password>" roles="manager-script"/>
 - In Jenkins, create a credentials entry with the above username and password with some like **tomcat_deploy_credentials**
 - Use that ID in the above script against the element **credentialsId**.
 - Replace the host and port in the above URL with the host and port of your tomcat instance

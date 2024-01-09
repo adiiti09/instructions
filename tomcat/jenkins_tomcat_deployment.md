@@ -17,5 +17,5 @@
 
 # Set up to be done on the tomcat side
 
-    - Edit <tomcat_home>/conf/tomcat-users.xml
-    - 
+- Edit <tomcat_home>/conf/tomcat-users.xml
+-  

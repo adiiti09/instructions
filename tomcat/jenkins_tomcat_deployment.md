@@ -21,7 +21,7 @@
 - Add the followoing lines:
         <role rolename="manager-script"/>
         <user username="<some_username>" password="<some_password>" roles="manager-script"/>
-- In Jenkins, create a credentials entry with the above username and password with some like tomcat_deploy_credentials
-- Use that ID in the above script against the element credentialsId.
+- In Jenkins, create a credentials entry with the above username and password with some like **tomcat_deploy_credentials**
+- Use that ID in the above script against the element **credentialsId**.
 - Replace the host and port in the above URL with the host and port of your tomcat instance
-- Choose an appropriate context path. This is the name with which the deployment can be accessed from the URL like <tomcat_host>:<port>/<context_path>
+- Choose an appropriate context path. This is the name with which the deployment can be accessed from the URL like **<tomcat_host>:<port>/<context_path>**

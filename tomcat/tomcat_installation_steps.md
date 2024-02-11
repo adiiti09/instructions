@@ -1,17 +1,29 @@
-# Create tomcat user along with home directory
+https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-10-on-ubuntu-20-04
+
+# Tomcat installation ob Ubuntu 22.04
+## Create tomcat user along with home directory
 ## For security purposes, Tomcat should run under a separate, unprivileged user
       sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
 
-2. VERSION=10.1.16
-   wget https://downloads.apache.org/tomcat/tomcat-10/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz
+## Check and install JDK if needed
+      sudo apt install openjdk-11-jdk
 
-3. sudo tar -xf apache-tomcat-${VERSION}.tar.gz -C /opt/tomcat/
+## Set version to download the binaries
+      VERSION=10.1.16
+      wget https://downloads.apache.org/tomcat/tomcat-10/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz
 
-4. sudo ln -s /opt/tomcat/apache-tomcat-${VERSION} /opt/tomcat/latest
+## Extract to the installation directory created above
+      sudo tar -xf apache-tomcat-${VERSION}.tar.gz -C /opt/tomcat/
 
-5. sudo chown -R tomcat: /opt/tomcat
+## Create a softlink to the installation folder as latest
+      sudo ln -s /opt/tomcat/apache-tomcat-${VERSION} /opt/tomcat/latest
 
-6. sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+## Change ownership and give required executable access to tomcat
+      sudo chown -R tomcat:tomcat /opt/tomcat/
+      sudo chmod -R u+x /opt/tomcat/bin
+
+# Config admin users
+## 
 
 7. sudo nano /etc/systemd/system/tomcat.service
 

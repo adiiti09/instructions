@@ -53,49 +53,65 @@ https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-10
       sudo nano /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml
 
 # Creating a `systemd` service
-7. sudo nano /etc/systemd/system/tomcat.service
+## We can create a systemd service to start, stop, restart tomcat and enable it to keep running in the background
+## Get the java location using the below command and make a note of it
 
-/etc/systemd/system/tomcat.service
-[Unit]
-Description=Tomcat 10 servlet container
-After=network.target
-[Service]
-Type=forking
-User=tomcat
-Group=tomcat
-Environment="JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64"
-Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom -Djava.awt.headless=true"
-Environment="CATALINA_BASE=/opt/tomcat/latest"
-Environment="CATALINA_HOME=/opt/tomcat/latest"
-Environment="CATALINA_PID=/opt/tomcat/latest/temp/tomcat.pid"
-Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
-ExecStart=/opt/tomcat/latest/bin/startup.sh
-ExecStop=/opt/tomcat/latest/bin/shutdown.sh
-[Install]
-WantedBy=multi-user.target
+      sudo update-java-alternatives -l
 
+## Create the service file
+      sudo nano /etc/systemd/system/tomcat.service
 
-8. sudo systemctl daemon-reload
+## Paste the below text ensuring to replace values with actual values applicable to your system
 
-sudo systemctl enable --now tomcat
+      [Unit]
+      Description=Tomcat
+      After=network.target
 
-sudo systemctl status tomcat
+      [Service]
+      Type=forking
 
+      User=tomcat
+      Group=tomcat
 
-sudo systemctl start tomcat
-sudo systemctl stop tomcat
-sudo systemctl restart tomcat
+      Environment="JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64" # change this as appropriate
+      Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
+      # Ensure that the installation location is correct
+      Environment="CATALINA_BASE=/opt/tomcat/latest"
+      Environment="CATALINA_HOME=/opt/tomcat/latest"
+      Environment="CATALINA_PID=/opt/tomcat/latest/temp/tomcat.pid"
+      Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
 
+      ExecStart=/opt/tomcat/latest/bin/startup.sh
+      ExecStop=/opt/tomcat/latest/bin/shutdown.sh
 
-local - sudo ufw allow 8080/tcp
-Azure VM - Add inbound rule
+      RestartSec=10
+      Restart=always
 
-Go to /opt/tomcat/latest/conf
-sudo /opt/tomcat/latest/conf/nano server.xml
-Find 8080 abd change it to 8088
+      [Install]
+      WantedBy=multi-user.target
 
-Start the service
+## Reload the systemd daemon so that it becomes aware of the new service
+      sudo systemctl daemon-reload
 
-Add inbound rule for port 8088
+## Start, stop restart, check status of tomcat using
+      sudo systemctl start tomcat
+      sudo systemctl stop tomcat
+      sudo systemctl restart tomcat
+      sudo systemctl status tomcat
 
-Open http://<server_ip>:8088
+## To enable Tomcat starting up with the system use
+      sudo systemctl enable tomcat
+
+# Accessing the web interface
+## Tomcat uses port 8080 to accept HTTP requests
+
+### local - sudo ufw allow 8080/tcp
+### Azure VM - Add inbound rule
+
+## In case of any other applocation running already on port 8080 causing tomcat start to fail
+## Go to /opt/tomcat/latest/conf
+         sudo nano /opt/tomcat/latest/conf/server.xml
+         #Find 8080 and change it to 8088 or some free port
+
+## Restart the service
+## Open http://<server_ip>:8088

@@ -20,11 +20,39 @@ https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-10
 
 ## Change ownership and give required executable access to tomcat
       sudo chown -R tomcat:tomcat /opt/tomcat/
-      sudo chmod -R u+x /opt/tomcat/bin
+      sudo chmod -R u+x /opt/tomcat/latest/bin
 
 # Config admin users
-## 
+## We need to define privileged users in Tomcat’s configuration for accessing through UI
 
+      sudo nano /opt/tomcat/latest/conf/tomcat-users.xml
+
+## At the bottom add the below lines, just above the closing tag
+
+      <role rolename="manager-gui" />
+      <user username="manager" password="manager_password" roles="manager-gui" />
+
+      <role rolename="admin-gui" />
+      <user username="admin" password="admin_password" roles="manager-gui,admin-gui" />
+
+## To remove the restriction for the Manager page, open its config file for editing
+      sudo nano /opt/tomcat/latest/webapps/manager/META-INF/context.xml
+
+## Comment out the Valve definition, as shown
+
+      ...
+      <Context antiResourceLocking="false" privileged="true" >
+      <CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor"
+                   sameSiteCookies="strict" />
+      <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+               allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+      <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.Csr>
+      </Context>
+
+## Repeat the same for host manager as well by editing the below file
+      sudo nano /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml
+
+# Creating a `systemd` service
 7. sudo nano /etc/systemd/system/tomcat.service
 
 /etc/systemd/system/tomcat.service

@@ -1,4 +1,6 @@
-1. sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
+# Create tomcat user along with home directory
+## For security purposes, Tomcat should run under a separate, unprivileged user
+      sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
 
 2. VERSION=10.1.16
    wget https://downloads.apache.org/tomcat/tomcat-10/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz

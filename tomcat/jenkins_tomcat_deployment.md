@@ -25,3 +25,7 @@
 - Use that ID in the above script against the element **credentialsId**.
 - Replace the host and port in the above URL with the host and port of your tomcat instance
 - Choose an appropriate context path. This is the name with which the deployment can be accessed from the URL like "**<tomcat_host>:\<port>/<context_path>**"
+
+# Plugin required on Jenkins side
+
+- We need to install Deploy to container plugin

@@ -9,7 +9,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-10
       sudo apt install openjdk-11-jdk
 
 ## Set version to download the binaries
-      VERSION=10.1.16
+      VERSION=10.1.18
       wget https://downloads.apache.org/tomcat/tomcat-10/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz
 
 ## Extract to the installation directory created above
